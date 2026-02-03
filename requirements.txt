@@ -1,0 +1,17 @@
+# Web Framework for the Semantic Engine API
+Flask>=3.0.0
+
+# Data Validation & Protocol Definition (Protocol v1.0)
+# 注意: 代码使用了 @field_validator，必须使用 Pydantic v2.0+
+pydantic>=2.5.0
+
+# Alibaba Cloud Qwen LLM SDK
+# 建议保持较新版本以支持 qwen-plus/qwen-max 最新模型
+dashscope>=1.14.0
+
+# HTTP Client for the Orchestrator/Test Client
+requests>=2.31.0
+
+# Environment Variable Management (Recommended)
+# 用于加载 .env 文件中的 DASHSCOPE_API_KEY，避免在终端手动 export
+python-dotenv>=1.0.0
