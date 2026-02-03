@@ -1,0 +1,27 @@
+{
+  "design_iteration": 2,
+  "metrics": {
+    "max_temp": 30.256395885796756,
+    "min_dist": 1.9999931694611153
+  },
+  "violations": [
+    {
+      "id": "VIO_GEO_2",
+      "type": "GEOMETRY_CLASH",
+      "description": "Gap to Rib 2.00mm < 3.0mm",
+      "involved_components": [
+        "Battery",
+        "Rib"
+      ],
+      "severity": 1.0
+    }
+  ],
+  "geometry_summary": "Battery at (8.00, 0.00, 18.00). Rib (Fixed Wall) at X=10.0. HeatSource at (0.0, 20.0).",
+  "thermal_summary": "Max Temp 30.3C.",
+  "history_trace": [
+    "Iter 1: AI tried MOVE X range [0.0, 3.0]. Solver delta: 0.00. Result: Safe"
+  ],
+  "allowed_ops": [
+    "MOVE"
+  ]
+}

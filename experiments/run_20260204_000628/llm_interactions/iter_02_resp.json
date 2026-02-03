@@ -1,0 +1,22 @@
+{
+  "actions": [
+    {
+      "bounds": [
+        0.0,
+        5.0
+      ],
+      "conflicts": [
+        "GEOMETRY_CLASH"
+      ],
+      "hints": [
+        "Move away from Rib at X=10.0 to increase gap"
+      ],
+      "op_id": "MOVE",
+      "search_axis": "X",
+      "target_component": "Battery",
+      "unit": "mm"
+    }
+  ],
+  "plan_id": "PLAN_20240522_001",
+  "reasoning_summary": "Gap to Rib is 1.9999mm, below required 3.0mm clearance; Rib is at X=10.0 and Battery is at X=8.00, so moving Battery in +X direction increases gap. Previous MOVE X [0.0, 3.0] yielded zero delta — likely due to overly conservative upper bound or solver stuck; widen upper bound to ensure sufficient clearance margin while staying within feasible envelope."
+}

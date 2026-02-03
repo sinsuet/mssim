@@ -1,17 +1,28 @@
-# Web Framework for the Semantic Engine API
+# --- Web Service (The Brain) ---
+# 用于 app.py 的微服务框架
 Flask>=3.0.0
 
-# Data Validation & Protocol Definition (Protocol v1.0)
-# 注意: 代码使用了 @field_validator，必须使用 Pydantic v2.0+
-pydantic>=2.5.0
-
-# Alibaba Cloud Qwen LLM SDK
-# 建议保持较新版本以支持 qwen-plus/qwen-max 最新模型
+# --- LLM Integration ---
+# 阿里云通义千问 SDK (支持 qwen-plus/qwen-max)
 dashscope>=1.14.0
 
-# HTTP Client for the Orchestrator/Test Client
-requests>=2.31.0
+# --- Data Protocol (The Gatekeeper) ---
+# 用于 protocol.py 的强类型校验
+# 注意: 代码使用了 v2.0 的 @field_validator 语法，必须 >= 2.6.0
+pydantic>=2.6.0
 
-# Environment Variable Management (Recommended)
-# 用于加载 .env 文件中的 DASHSCOPE_API_KEY，避免在终端手动 export
+# --- Scientific Computing (The Solver) ---
+# 用于 run_pro.py 中的 minimize_scalar 梯度下降算法
+scipy>=1.12.0
+# 数值计算基础库
+numpy>=1.26.0
+
+# --- Visualization (The Analyzer) ---
+# 用于 analyzer.py 生成仪表盘图片
+matplotlib>=3.8.0
+
+# --- Utilities ---
+# 用于 run_pro.py 发送 HTTP 请求
+requests>=2.31.0
+# 用于加载 .env 文件中的 API Key
 python-dotenv>=1.0.0

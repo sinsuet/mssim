@@ -1,7 +1,9 @@
 from enum import Enum
 from typing import List, Optional, Dict, Union, Any
 from pydantic import BaseModel, Field, field_validator
-
+from enum import Enum
+from typing import List, Optional, Dict, Union
+from pydantic import BaseModel, Field, field_validator
 # =============================================================================
 # 1. 基础枚举定义 (Enums) - 对应 OpsGeo 和 SimEval 模块
 # =============================================================================
@@ -132,4 +134,72 @@ class ContextPack(BaseModel):
             for h in self.history_trace:
                 md += f"- {h}\n"
                 
+        return md
+
+
+class OperatorType(str, Enum):
+    MOVE = "MOVE"
+    SWAP = "SWAP"
+    ADD_SURFACE = "ADD_SURFACE"
+
+class ViolationType(str, Enum):
+    THERMAL_OVERHEAT = "THERMAL_OVERHEAT"
+    GEOMETRY_CLASH = "GEOMETRY_CLASH"
+
+# --- Output: SearchSpec ---
+class SearchAction(BaseModel):
+    op_id: OperatorType
+    target_component: str
+    search_axis: Optional[str] = None
+    bounds: List[float] = Field(..., min_items=2, max_items=2)
+    unit: str = "mm"
+    conflicts: List[str] = []
+    hints: List[str] = []
+
+    @field_validator('bounds')
+    def check_bounds_order(cls, v):
+        if v[0] > v[1]: raise ValueError(f"Bounds error: {v}")
+        return v
+
+class SearchSpec(BaseModel):
+    plan_id: str
+    reasoning_summary: str
+    actions: List[SearchAction]
+
+# --- Input: ContextPack ---
+class ViolationItem(BaseModel):
+    id: str
+    type: ViolationType
+    description: str
+    involved_components: List[str]
+    severity: float
+
+class ContextPack(BaseModel):
+    design_iteration: int
+    metrics: Dict[str, float]
+    violations: List[ViolationItem]
+    geometry_summary: str
+    thermal_summary: str
+    history_trace: List[str]
+    
+    # [新增] 显式告知 LLM 哪些算子可用 (图片中的 Context 要求)
+    allowed_ops: List[str] = Field(
+        default=["MOVE"], 
+        description="List of allowed operators for the current context"
+    )
+
+    def to_markdown_prompt(self) -> str:
+        md = f"# Satellite Design State (Iter {self.design_iteration})\n\n"
+        md += "## 1. Key Metrics\n"
+        for k, v in self.metrics.items(): md += f"- **{k}**: {v}\n"
+        md += "\n## 2. Active Violations\n"
+        if not self.violations: md += "None. SAFE.\n"
+        for v in self.violations:
+            md += f"- [**{v.type.value}**] {v.description}\n"
+        md += f"\n## 3. Physical Context\n### Geometry\n{self.geometry_summary}\n"
+        md += f"### Thermal\n{self.thermal_summary}\n"
+        # [新增]
+        md += f"\n## 4. Constraint Rules\nAllowed Operators: {', '.join(self.allowed_ops)}\n"
+        if self.history_trace:
+            md += "\n## 5. History Trace\n" + "\n".join([f"- {h}" for h in self.history_trace])
         return md

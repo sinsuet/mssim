@@ -1,0 +1,22 @@
+{
+  "actions": [
+    {
+      "bounds": [
+        5.0,
+        10.0
+      ],
+      "conflicts": [
+        "GEOMETRY_CLASH"
+      ],
+      "hints": [
+        "Increase gap from Rib by moving away along +X"
+      ],
+      "op_id": "MOVE",
+      "search_axis": "X",
+      "target_component": "Battery",
+      "unit": "mm"
+    }
+  ],
+  "plan_id": "PLAN_20240415_001",
+  "reasoning_summary": "Because Battery is at X=13.00 and Rib is at X=10.0, the current gap is 3.00mm — exactly at the minimum allowed 3.0mm threshold and flagged as GEOMETRY_CLASH due to numerical tolerance violation. Moving Battery in the -X direction would reduce the gap further (worsening clash), so we must move it in +X direction to increase clearance. Prior attempts moved +X up to +5.0mm safely; extending search beyond that (e.g., +5.0 to +10.0mm) provides margin while respecting constraint rules allowing only MOVE."
+}

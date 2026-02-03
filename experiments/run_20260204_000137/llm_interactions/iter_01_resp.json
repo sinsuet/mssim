@@ -1,0 +1,22 @@
+{
+  "actions": [
+    {
+      "bounds": [
+        -2.0,
+        0.0
+      ],
+      "conflicts": [
+        "GEOMETRY_CLASH"
+      ],
+      "hints": [
+        "Move away from Rib at X=10.0"
+      ],
+      "op_id": "MOVE",
+      "search_axis": "X",
+      "target_component": "Battery",
+      "unit": "mm"
+    }
+  ],
+  "plan_id": "PLAN_20240415_001",
+  "reasoning_summary": "Because Battery is at X=8.00 and Rib is a fixed wall at X=10.0, the current gap is only 2.0mm (<3.0mm required), indicating Battery is too close to Rib along +X direction; moving Battery in -X direction increases gap and resolves GEOMETRY_CLASH."
+}

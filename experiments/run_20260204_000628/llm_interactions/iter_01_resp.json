@@ -1,0 +1,22 @@
+{
+  "actions": [
+    {
+      "bounds": [
+        0.0,
+        3.0
+      ],
+      "conflicts": [
+        "GEOMETRY_CLASH"
+      ],
+      "hints": [
+        "Move away from Rib at X=10.0 to achieve ≥3.0mm gap"
+      ],
+      "op_id": "MOVE",
+      "search_axis": "X",
+      "target_component": "Battery",
+      "unit": "mm"
+    }
+  ],
+  "plan_id": "PLAN_20240405_001",
+  "reasoning_summary": "Geometry clash occurs because Battery is too close to Rib at X=10.0; current Battery X-position is 8.00, resulting in only 2.0mm gap (below required 3.0mm). To resolve, move Battery away from Rib along the +X axis to increase separation."
+}
